@@ -37,9 +37,12 @@ class Interface:
     def get_input(self):
         guess = self.user_guess.get()
         out = ""
-        if len(guess) == 1:
+        if any(char.isdigit() for char in guess):
+            out += "No numbers\n"
+        elif len(guess) == 1:
             self.game.main(guess)
         else:
-            out = "1 character only"
+            out += "1 character only"
         self.feedback.configure(text=out)
+        self.user_guess.delete(0, tk.END)
         self.update()
