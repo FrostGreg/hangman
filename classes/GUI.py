@@ -1,5 +1,5 @@
 import tkinter as tk
-import hangman
+from classes import hangman
 
 
 class Interface:

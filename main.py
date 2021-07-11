@@ -1,3 +1,3 @@
-import GUI
+from classes import GUI
 
 x = GUI.Interface()
