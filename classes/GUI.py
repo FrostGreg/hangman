@@ -24,6 +24,9 @@ class Interface:
         self.submit_btn = tk.Button(self.root, text="Submit", command=self.get_input)
         self.submit_btn.grid(row=4, column=3)
 
+        self.feedback = tk.Label(self.root, text="")
+        self.feedback.grid(row=5, column=2)
+
         self.root.mainloop()
 
     def update(self):
@@ -33,7 +36,10 @@ class Interface:
 
     def get_input(self):
         guess = self.user_guess.get()
-        self.game.main(guess)
+        out = ""
+        if len(guess) == 1:
+            self.game.main(guess)
+        else:
+            out = "1 character only"
+        self.feedback.configure(text=out)
         self.update()
-
-
