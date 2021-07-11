@@ -27,12 +27,19 @@ class Interface:
         self.feedback = tk.Label(self.root, text="")
         self.feedback.grid(row=5, column=2)
 
+        self.progress = tk.Label(self.root, text="")
+        self.progress.grid(row=6, column=2)
+
         self.root.mainloop()
 
     def update(self):
         self.target_word.configure(text=self.game.x)
+        self.progress.configure(text=self.game.DEAD[:self.game.incorrect_guesses])
         if self.game.x == self.game.choice:
             self.result_lbl.configure(text="Congrats you guessed correctly :)")
+        elif not self.game.running:
+            self.result_lbl.configure(text="Unlucky you didn't get it")
+            self.target_word.configure(text=self.game.choice)
 
     def get_input(self):
         guess = self.user_guess.get()
@@ -40,7 +47,7 @@ class Interface:
         if any(char.isdigit() for char in guess):
             out += "No numbers\n"
         elif len(guess) == 1:
-            self.game.main(guess)
+            out = self.game.main(guess)
         else:
             out += "1 character only"
         self.feedback.configure(text=out)

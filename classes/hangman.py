@@ -16,9 +16,8 @@ class Hangman:
         if self.x == self.choice:
             self.running = False
 
-        return not self.running
-
     def main(self, guess):
+        out = ""
         if guess in self.choice:
             idx = self.choice.find(guess)
             self.x = self.x[:idx] + guess + self.x[idx+1:]
@@ -26,7 +25,7 @@ class Hangman:
             self.incorrect_guesses += 1
             if self.incorrect_guesses == 7:
                 self.running = False
-                print("\n######\nHANGMAN\n######\n You have lost the word was: " + self.choice)
             else:
-                print("guess was incorrect\nHANGMAN progression: " + self.DEAD[:self.incorrect_guesses])
+                out = "Guess was incorrect"
         self.has_won()
+        return out
