@@ -19,8 +19,9 @@ class Hangman:
     def main(self, guess):
         out = ""
         if guess in self.choice:
-            idx = self.choice.find(guess)
-            self.x = self.x[:idx] + guess + self.x[idx+1:]
+            positions = [x for x in range(len(self.choice)) if self.choice[x] == guess]
+            for idx in positions:
+                self.x = self.x[:idx] + guess + self.x[idx+1:]
         else:
             self.incorrect_guesses += 1
             if self.incorrect_guesses == 7:
