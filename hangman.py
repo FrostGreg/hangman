@@ -1,48 +1,32 @@
 import random
 
-class game:
+
+class Hangman:
     def __init__(self):
+        self.DEAD = "HANGMAN"
+
         words = ["cheese", "eggs", "shoes", "film", "computer", "yellow", "happy", "elephant", "stadium", "basketball",
                  "art", "pillow"]
-        self.y = 0
-        self.dead = "HANGMAN"
+        self.incorrect_guesses = 0
         self.choice = random.choice(words)
-        self.x = self.createWordline()
+        self.x = "-" * len(self.choice)
         self.running = True
 
-
-    def createWordline(self):
-        x = ""
-        for letter in self.choice:
-            x += "_"
-        return x
-
-    def checkWin(self):
+    def has_won(self):
         if self.x == self.choice:
             self.running = False
-            return True
-        else:
-            return False
 
+        return not self.running
 
-    def maincode(self, guess):
-        i = 0
+    def main(self, guess):
         if guess in self.choice:
-            for letter in self.choice:
-                if letter == guess:
-                    foo = self.choice.find(letter, i)
-                    self.x = self.x[:foo] + letter + self.x[foo + 1:]
-                    i += 1
-                else:
-                    i += 1
+            idx = self.choice.find(guess)
+            self.x = self.x[:idx] + guess + self.x[idx+1:]
         else:
-            self.y += 1
-            if self.y == 7:
+            self.incorrect_guesses += 1
+            if self.incorrect_guesses == 7:
                 self.running = False
                 print("\n######\nHANGMAN\n######\n You have lost the word was: " + self.choice)
             else:
-                print("guess was incorrect")
-                print("HANGMAN progression: " + self.dead[:self.y])
-        self.checkWin()
-
-
+                print("guess was incorrect\nHANGMAN progression: " + self.DEAD[:self.incorrect_guesses])
+        self.has_won()

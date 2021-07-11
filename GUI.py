@@ -2,35 +2,38 @@ import tkinter as tk
 import hangman
 
 
-def update():
-    targetword.configure(text=newgame.x)
-    if newgame.x == newgame.choice:
-        resultlbl.configure(text="Congrats you guessed correctly :)")
+class Interface:
+    def __init__(self):
+        self.game = hangman.Hangman()
+        self.root = tk.Tk()
+        self.root.geometry("400x300")
+        self.root.title("Hangman")
+
+        self.title = tk.Label(self.root, text="HANGMAN")
+        self.title.grid(row=1, column=2, ipadx=75)
+
+        self.result_lbl = tk.Label(self.root, text="")
+        self.result_lbl.grid(row=2, column=2)
+
+        self.target_word = tk.Label(self.root, text=self.game.x)
+        self.target_word.grid(row=3, column=2)
+
+        self.user_guess = tk.Entry(self.root)
+        self.user_guess.grid(row=4, column=2)
+
+        self.submit_btn = tk.Button(self.root, text="Submit", command=self.get_input)
+        self.submit_btn.grid(row=4, column=3)
+
+        self.root.mainloop()
+
+    def update(self):
+        self.target_word.configure(text=self.game.x)
+        if self.game.x == self.game.choice:
+            self.result_lbl.configure(text="Congrats you guessed correctly :)")
+
+    def get_input(self):
+        guess = self.user_guess.get()
+        self.game.main(guess)
+        self.update()
 
 
-def getinput():
-    guess = userguess.get()
-    newgame.maincode(guess)
-    update()
-
-
-newgame = hangman.game()
-root = tk.Tk()
-root.geometry("400x300")
-
-title = tk.Label(root, text="HANGMAN")
-title.grid(row=1, column=2, ipadx=75)
-
-resultlbl = tk.Label(root, text="")
-resultlbl.grid(row=2, column=2)
-
-targetword = tk.Label(root, text=newgame.x)
-targetword.grid(row=3, column=2)
-
-userguess = tk.Entry(root)
-userguess.grid(row=4, column=2)
-
-submitbtn = tk.Button(root, text="Submit", command=getinput)
-submitbtn.grid(row=4, column=3)
-
-root.mainloop()
